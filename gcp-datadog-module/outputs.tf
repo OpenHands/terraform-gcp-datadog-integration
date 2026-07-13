@@ -19,7 +19,10 @@ output "dataflow_job_name" {
 
 output "dataflow_job_labels" {
   description = "Effective labels applied to the Dataflow job and its worker resources."
-  value       = google_dataflow_job.pubsub_stream_to_datadog.labels
+  value = merge(
+    var.dataflow_job_labels,
+    { dataflow-job-label = "datadog_terraform" },
+  )
 }
 
 output "temp_files_bucket_name" {
