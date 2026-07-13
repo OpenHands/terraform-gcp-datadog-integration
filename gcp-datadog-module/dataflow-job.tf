@@ -39,5 +39,20 @@ resource "google_dataflow_job" "pubsub_stream_to_datadog" {
     var.dataflow_job_labels,
     { dataflow-job-label = "datadog_terraform" },
   )
+
+  lifecycle {
+    precondition {
+      condition = !var.enforce_required_compute_labels || alltrue([
+        for label in ["environment", "owner", "project", "dataclassification", "application"] :
+        try(
+          can(regex("^[a-z0-9_-]{1,63}$", var.dataflow_job_labels[label])) &&
+          var.dataflow_job_labels[label] == lower(var.dataflow_job_labels[label]),
+          false,
+        )
+      ])
+      error_message = "Dataflow job labels must include non-empty lowercase environment, owner, project, dataclassification, and application values when enforcement is enabled."
+    }
+  }
+
   depends_on = [google_project_service.enable_apis, time_sleep.dataflow_sa_creation]
 }

@@ -34,6 +34,12 @@ variable "dataflow_job_labels" {
   default     = {}
 }
 
+variable "enforce_required_compute_labels" {
+  type        = bool
+  description = "Require the standard Compute Engine environment, owner, project, dataclassification, and application labels."
+  default     = false
+}
+
 variable "dataflow_temp_bucket_name" {
   type        = string
   description = "GCS Bucket to write Dataflow temporary files. Must start and end with letter or number. Must be between 3 and 63 characters."

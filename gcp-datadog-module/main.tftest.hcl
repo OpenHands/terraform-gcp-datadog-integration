@@ -18,13 +18,14 @@ run "adds_caller_labels_to_the_dataflow_job" {
   command = plan
 
   variables {
-    project_id                = "production-092024"
-    subnet_region             = "us-central1"
-    vpc_name                  = "prod-core-app"
-    subnet_name               = "prod-core-app"
-    datadog_api_key           = "fake-datadog-api-key"
-    datadog_site_url          = "https://http-intake.logs.us5.datadoghq.com"
-    dataflow_temp_bucket_name = "datadog-temp-bucket-production-092024"
+    project_id                      = "production-092024"
+    subnet_region                   = "us-central1"
+    vpc_name                        = "prod-core-app"
+    subnet_name                     = "prod-core-app"
+    datadog_api_key                 = "fake-datadog-api-key"
+    datadog_site_url                = "https://http-intake.logs.us5.datadoghq.com"
+    dataflow_temp_bucket_name       = "datadog-temp-bucket-production-092024"
+    enforce_required_compute_labels = true
     dataflow_job_labels = {
       environment        = "production"
       owner              = "graham"
