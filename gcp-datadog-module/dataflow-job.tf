@@ -35,6 +35,9 @@ resource "google_dataflow_job" "pubsub_stream_to_datadog" {
     outputDeadletterTopic = google_pubsub_topic.output_dead_letter.id
   }
   on_delete = "cancel"
-  labels    = { dataflow-job-label = "datadog_terraform" }
+  labels = merge(
+    { dataflow-job-label = "datadog_terraform" },
+    var.dataflow_job_labels,
+  )
   depends_on = [google_project_service.enable_apis, time_sleep.dataflow_sa_creation]
 }

@@ -28,6 +28,12 @@ variable "dataflow_job_name" {
   default     = "datadog-export-job"
 }
 
+variable "dataflow_job_labels" {
+  type        = map(string)
+  description = "Additional labels for the Dataflow job and its worker resources."
+  default     = {}
+}
+
 variable "dataflow_temp_bucket_name" {
   type        = string
   description = "GCS Bucket to write Dataflow temporary files. Must start and end with letter or number. Must be between 3 and 63 characters."

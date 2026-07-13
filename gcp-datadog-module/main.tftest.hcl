@@ -62,7 +62,10 @@ run "keeps_the_existing_label_by_default" {
   }
 
   assert {
-    condition     = google_dataflow_job.pubsub_stream_to_datadog.labels == { "dataflow-job-label" = "datadog_terraform" }
+    condition = (
+      length(google_dataflow_job.pubsub_stream_to_datadog.labels) == 1 &&
+      google_dataflow_job.pubsub_stream_to_datadog.labels["dataflow-job-label"] == "datadog_terraform"
+    )
     error_message = "Callers that omit Dataflow job labels must retain the module's current behavior."
   }
 }
