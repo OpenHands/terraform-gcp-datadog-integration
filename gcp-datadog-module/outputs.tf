@@ -17,6 +17,11 @@ output "dataflow_job_name" {
   value       = google_dataflow_job.pubsub_stream_to_datadog.name
 }
 
+output "dataflow_job_labels" {
+  description = "Effective labels applied to the Dataflow job and its worker resources."
+  value       = google_dataflow_job.pubsub_stream_to_datadog.labels
+}
+
 output "temp_files_bucket_name" {
   description = "The name of the created temporary files bucket."
   value       = google_storage_bucket.temp_files_bucket.name
