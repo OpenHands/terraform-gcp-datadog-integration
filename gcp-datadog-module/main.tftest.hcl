@@ -69,3 +69,25 @@ run "keeps_the_existing_label_by_default" {
     error_message = "Callers that omit Dataflow job labels must retain the module's current behavior."
   }
 }
+
+run "prevents_callers_from_overriding_the_existing_label" {
+  command = plan
+
+  variables {
+    project_id                = "production-092024"
+    subnet_region             = "us-central1"
+    vpc_name                  = "prod-core-app"
+    subnet_name               = "prod-core-app"
+    datadog_api_key           = "fake-datadog-api-key"
+    datadog_site_url          = "https://http-intake.logs.us5.datadoghq.com"
+    dataflow_temp_bucket_name = "datadog-temp-bucket-production-092024"
+    dataflow_job_labels = {
+      dataflow-job-label = "overridden"
+    }
+  }
+
+  assert {
+    condition     = google_dataflow_job.pubsub_stream_to_datadog.labels["dataflow-job-label"] == "datadog_terraform"
+    error_message = "Caller labels must not override the module's existing Dataflow label."
+  }
+}
